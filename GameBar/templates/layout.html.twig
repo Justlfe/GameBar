@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"/>
+{% endblock %}
+
+{% block body %}
+
+
+    {% include 'components/_menu.html.twig' %}
+
+    {% block content '' %}
+
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <!--script file-->
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.js') }}"></script>
+
+{% endblock  %}
