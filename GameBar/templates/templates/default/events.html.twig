@@ -1,0 +1,81 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+    Events
+{% endblock %}
+
+
+{% block content %}
+
+    {# affichage du calendrier #}
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                plugins: ['interaction', 'dayGrid', 'timeGrid', 'list'],
+                defaultView: 'listMonth',
+                defaultDate: '2019-05-10',
+
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+                },
+
+                events: {{ calendar | raw }}
+            });
+
+            calendar.render();
+        });
+
+    </script>
+
+
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div class="row justify-content-center justify-content-md-end my-3">
+            <div class="col-6 col-md-2">
+                <a class="btn btn-primary" href="{{ path('default_formulairevent') }}">Ajouter un event</a>
+            </div>
+        </div>
+    {% endif %}
+
+
+    <!-- Div de Présentationt -->
+    <div class="row justify-content-center">
+        <div class="col-md-6 mt-8 text-center guide">
+            <p class="titreHaut">PROCHAINES PARTIES</p><br><br>
+            <p>Cliquez sur une partie pour y accéder</p>
+        </div>
+    </div>
+    <!-- Fin de div de présentation -->
+
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 mb-5" id="calendar"></div>
+</div>
+
+
+
+    {% if app.request.query.get("delete") is defined %}
+
+        {% if app.request.query.get("delete") == 'failure' %}
+
+            <div class="row text-center alert alert-danger">l'event que vous essayez de supprimer n'existe
+                pas dans la base
+            </div>
+
+        {% elseif app.request.query.get("delete") == 'success' %}
+
+            <div class="row text-center alert alert-danger">
+                <strong>l'Event n°{{ app.request.query.get('idEventDeleted') }}</strong> du bar
+                <strong>{{ app.request.query.get('barEventDeleted') }}</strong> a bien été supprimé
+            </div>
+
+        {% endif %}
+
+    {% endif %}
+
+
+{% endblock %}

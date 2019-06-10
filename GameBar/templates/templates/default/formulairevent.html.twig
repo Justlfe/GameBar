@@ -1,0 +1,14 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+    Formulairevent
+{% endblock %}
+
+{% block content %}
+
+    <div class="row ">
+        <div class="col-md-4 col-offset-4  my-5 designform connexionform">
+            {{ form( form, { attr: { novalidate: 'novalidate' } } ) }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+    MapBar
+{% endblock %}
+
+{% block content %}
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px;  /* Hauteur 400px */
+            width: 30%;  /* Longueur 30% */
+        }
+    </style>
+
+    <h3>Ma Map Bar</h3>
+
+    <div id="map_canvas"></div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="mx-auto col-sm-11" id="gmap">
+
+                <iframe src="https://www.google.com/maps/d/embed?mid=1q2yy84l8WZNpV5TttqHjgv9nznYpisHc" width="640" height="480"></iframe>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Div map -->
+    <div id="map"></div>
+    <script>
+        // Initialisation de la map
+        function initMap() {
+            // Localisation du player_one
+            var player_one = {lat: 48.8683, lng: 2.35208};
+            // La map se centre.
+            var map = new google.maps.Map(
+                document.getElementById('map'), {zoom: 16, center: player_one});
+            // Le marker de la position
+            var marker = new google.maps.Marker({position: player_one, map: map});
+        }
+    </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiC5kDpbi61HXGMzwuTYkDbpUiEJQb5f4&callback=initMap">
+    </script>
+
+    <!--------------------------------------------------------------------------------->
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px;  /* The height is 400 pixels */
+            width: 30%;  /* The width is the width of the web page */
+        }
+    </style>
+
+    <h3>Ma Map Bar</h3>
+        <!-- Div map -->
+    <div id="map"></div>
+    <script>
+        // Initialisation de la map
+        function initMap() {
+            // Localisation du meltdown
+            var meltdown = {lat: 48.85356, lng: 2.37476};
+            // La map se centre.
+            var map = new google.maps.Map(
+                document.getElementById('map'), {zoom: 16, center: meltdown});
+            // Le marker de la position
+            var marker = new google.maps.Marker({position: meltdown, map: map});
+        }
+    </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiC5kDpbi61HXGMzwuTYkDbpUiEJQb5f4&callback=initMap">
+    </script>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

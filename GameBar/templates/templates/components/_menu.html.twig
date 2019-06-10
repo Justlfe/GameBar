@@ -1,0 +1,67 @@
+<header>
+    <div class="container-fluid">
+
+
+        <div class="row align-items-center"> <!-- nav row-->
+            <div class="col-12 py-2 px-4"> <!-- nav col-->
+
+                <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+                    <a class="navbar-brand" href="{{ path('index') }}">
+                        <img height="75rem" src="{{ asset('assets/img/logo/GAMEBAR_Logo_1080_GAMEBAR_-_logo_-_double_noir_orange.png') }}" alt="GameBar-logo">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('default_commentmarche') }}">COMMENT ÇA MARCHE ?</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('default_event') }}">TROUVER UNE PARTIE</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('default_bar') }}">BARS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('default_jeu') }}">JEUX</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('default_contact') }}">NOUS CONTACTER</a>
+                            </li>
+                        </ul>
+
+
+                        {# Connexion - Déconnexion - Inscription #}
+                        <div class="coDecoJoueur connexion-inscription-deconnexion">
+
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                {{ app.user.pseudo }}
+                                <a class="deconnexionJoueur connexion-link"
+                                   href="{{ path('membre_deconnexion') }}">DECONNEXION</a>
+                            {% else %}
+                                <a class="connexionJoueur connexion-link"
+                                   href="{{ path('membre_connexion') }}" role="button">CONNEXION</a>
+                                <a class="inscriptionJoueur connexion-link"
+                                   href="{{ path('default_commentmarche') }}" role="button">INSCRIPTION</a>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </nav>
+
+
+
+            </div><!-- nav col-->
+        </div><!-- nav row -->
+
+
+    </div> {# /container-fluid #}
+</header>
+
+<div class="container-fluid conteneur-general">
+

@@ -1,0 +1,46 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+    Bars
+{% endblock %}
+
+{% block content %}
+
+
+    <!-- Div de Présentationt -->
+    <div class="col-12 col-md-6 mx-auto text-center guide">
+        <p class="titreHaut">LA LISTE DES BARS</p><br>
+    </div>
+    <!-- Fin de div de présentation -->
+
+
+    <div class="row lesbars">
+        {% if bars is not empty %}
+            {% for bar in bars %}
+                <!-- DEBUT DE LA PRESENTATION DU BAR + INFOS -->
+                <div class="col-12 col-md-4 boitebars">
+                    <div class="phototitrebar">
+                        <a  href="{{ path('default_bar', {'id' : bar.id }) }}">
+                            <img class="imagedubars" src="{{ asset('assets/img/' ~ bar.image ) }}"
+                                 alt="{{ bar.nom }}">
+                            <h3 class="TitreBarName">{{ bar.nom }}</h3>
+                        </a>
+                    </div>
+                    {{ bar.adresse }} {{  bar.codePostal }} {{  bar.ville }}
+                    <br>
+                    - jeux disponibles -
+                    <ul class="lebas2">
+                        {% if bar.jeux is not empty %}
+                            {% for jeu in bar.jeux %}
+                                <li>{{ jeu.nom }}</li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div><!-- Fin de la div col md8-->
+               
+            {% endfor %}
+        {% endif %}
+    </div><!-- FIn de la div row Lesbars-->
+{% endblock %}
+
+

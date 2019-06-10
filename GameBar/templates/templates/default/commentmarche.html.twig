@@ -1,0 +1,106 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+    CommentÇaMarche
+{% endblock %}
+
+{% block content %}
+
+    <!-- Début 1ère Section -->
+    <section class="row">
+
+        <!-- Div TITRE -->
+
+        <div class="col-md-6 mt-8 mx-auto text-center guide">
+            <h1 class="titreHaut">COMMENT ÇA MARCHE ?</h1>
+        </div>
+
+    </section>
+    <!-- Fin 1ère Section -->
+
+
+
+
+    <section class="row" id="choisissez">
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class="col-md-6 imgcommentmarche">
+
+                <img class="pasbouger" src="{{ asset('assets/img/base-du-site/ImageTextbar.png' ) }}" alt=" bar ">
+
+                <!-- Div de Présentation JOUEUR -->
+                <div class="guide">
+                    <div class="textHaut">
+                        1. Cherchez un jeu ou un bar qui vous tente</br></br>
+                        2. Rejoignez une partie déjà prévue ou créez la votre</br></br>
+                        3. Retrouvez-vous sur place </br>
+                    </div>
+                    <div class="ligne-orange"></div>
+                    <div class="text-conclusion">AMUSEZ-VOUS !</div>
+                </div>
+                <!-- Fin de div de présentation -->
+            </div>
+
+            <div class="col-md-6 imgcommentmarche2">
+
+                <img class="pasbouger" src="{{ asset('assets/img/base-du-site/ImageTextbar2.png'  ) }}" alt=" bar ">
+
+                <!-- Div de Présentation BAR -->
+                <div class="guide">
+                    <div class="textHaut">
+                        1. Spécifiez les horaires de jeu qui VOUS arrange </br></br>
+                        2. Définissez le nombre de places disponibles</br></br>
+                        3. Recevez gratuitement les jeux que VOUS choisissez</br>
+                    </div>
+                    <div class="ligne-orange"></div>
+                    <div class="text-conclusion">ATTIREZ DE NOUVEAUX CLIENTS !</div>
+                </div>
+                <!-- Fin de div de présentation -->
+            </div>
+
+            {% else %}
+
+        <a href="{{ path('membre_inscription') }}" class="col-md-6 imgcommentmarche">
+
+            <img class="pasbouger" src="{{ asset('assets/img/base-du-site/ImageTextbar.png' ) }}" alt=" bar ">
+
+            <!-- Div de Présentation JOUEUR -->
+            <div class="guide">
+                <div class="textHaut">
+                    1. Cherchez un jeu ou un bar qui vous tente</br></br>
+                    2. Rejoignez une partie déjà prévue ou créez la votre</br></br>
+                    3. Retrouvez-vous sur place </br>
+                </div>
+                <div class="ligne-orange"></div>
+                <div class="text-conclusion">AMUSEZ-VOUS !</div>
+            </div>
+            <!-- Fin de div de présentation -->
+        </a>
+
+        <a href="{{ path('gerant_inscription') }}" class="col-md-6 imgcommentmarche2">
+
+            <img class="pasbouger" src="{{ asset('assets/img/base-du-site/ImageTextbar2.png'  ) }}" alt=" bar ">
+
+            <!-- Div de Présentation BAR -->
+            <div class="guide">
+                <div class="textHaut">
+                    1. Spécifiez les horaires de jeu qui VOUS arrange </br></br>
+                    2. Définissez le nombre de places disponibles</br></br>
+                    3. Recevez gratuitement les jeux que VOUS choisissez</br>
+                </div>
+                <div class="ligne-orange"></div>
+                <div class="text-conclusion">ATTIREZ DE NOUVEAUX CLIENTS !</div>
+            </div>
+            <!-- Fin de div de présentation -->
+        </a>
+        {% endif %}
+
+    </section>
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+    FormulaireJeu
+{% endblock %}
+
+{% block content %}
+
+    <div class="row justify-content-center my-5">
+        <div class="col-md-12 my-5">
+            {{ form(form, { attr: { novalidate : 'novalidate'} } ) }}
+        </div>
+    </div>
+
+{% endblock %}

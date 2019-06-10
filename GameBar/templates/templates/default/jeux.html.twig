@@ -1,0 +1,111 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+    Jeux
+{% endblock %}
+
+{% block content %}
+
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="row justify-content-end my-3">
+            <div class="col-2">
+                <a class="btn btn-primary" href="{{ path('default_formulairejeu') }}">Ajouter un jeu</a>
+            </div>
+        </div>
+    {% endif %}
+
+
+
+    <!-- Div de Présentationt -->
+    <div class="row justify-content-center">
+        <div class="col-md-6 mt-8 mx-auto text-center guide">
+            <p class="titreHaut">LISTE DES JEUX</p><br><br>
+        </div>
+    </div>
+    <!-- Fin de div de présentation -->
+
+
+
+    {% if app.request.query.get("delete") is defined %}
+
+        {% if app.request.query.get("delete") == 'failure' %}
+
+            <div class="row text-center alert alert-danger">le jeu que vous essayez de supprimer n'existe
+                pas dans la base
+            </div>
+
+        {% elseif app.request.query.get("delete") == 'success' %}
+
+            <div class="row text-center alert alert-danger">
+                <strong>{{ app.request.query.get('nameJeuDeleted') }}</strong> a bien été supprimé
+            </div>
+
+        {% endif %}
+
+    {% endif %}
+
+
+    <div class="row justify-content-center lesjeux">
+
+
+        {% if jeux is not empty %}
+            {% for jeu in jeux %}
+
+                <div class="col-12 col-md-4 mb-5 align-items-center">
+                    <a class="row justify-content-center" href="{{ path('default_jeu', {'id' : jeu.id }) }}">
+                        <div class="col-12 card-jeu">
+                            <div class="row justify-content-center align-items-center"></div>
+                            <div class="col mx-auto card-image ">
+                                <img class="imagedujeux" src="{{ asset('assets/img/' ~ jeu.image ) }}"
+                                     alt="{{ jeu.image }}">
+                            </div>
+                            <h3 class="lesjeux">{{ jeu.nom }}</h3>
+                        </div>
+
+                    </a>
+
+                    <p class="textedujeu">{{ jeu.description | raw }}</p>
+                </div>
+            {% endfor %}
+
+        {% else %}
+
+            <div class="alert alert-danger text-center">Désolé il n'y a aucun jeu à afficher</div>
+
+        {% endif %}
+
+
+    </div>
+
+
+{% endblock %}
+
+{#  <div>
+           -- PROCHAINES PARTIES DE <strong style="color:green;">{{ jeu.nom }}</strong> --
+            {% if jeu.event is not empty %}
+                {% for event in jeu.event %}
+                    -- <strong>Event numéro {{ event.id }}</strong> --
+                    <hr>
+                    bar de l'event : {{ event.bar.nom }}
+                    <hr>
+                    début : {{ event.heureDebut | date('D'~' '~'j'~' '~'M'~' '~'Y'~' | '~'H'~':'~'i') }}
+                    <br>
+                    fin : {{ event.heureFin | date('D'~' '~'j'~' '~'M'~' '~'Y'~' | '~'H'~':'~'i') }}
+                    <hr>
+                    // Liste des joueurs (Event {{ event.id }}) // <br>
+
+                    </div>
+
+                    </div>
+
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="alert alert-danger text-center">Désolé il n'y a aucun event associé à ce
+                    jeu
+                </div>
+
+            {% endif %}#}

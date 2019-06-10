@@ -1,0 +1,31 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    Connexion
+{% endblock %}
+
+{% block content %}
+    {% if error %}
+        <div class="alert alert-danger"><i class="fa fa-exclamation-triangle"
+                                           aria-hidden="true"></i>
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+    <div class="row ">
+        <div class="col-md-3 col-offset-6 centered  my-5 designform connexionform">
+            {% for message in app.flashes('notice') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <h3>Connexion</h3>
+            {{ form( form, { attr: { novalidate: 'novalidate' } } ) }}
+            <p><a href="{{ path('default_commentmarche') }}">Je n'ai pas de compte</a></p>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+

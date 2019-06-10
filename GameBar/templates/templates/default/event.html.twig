@@ -1,0 +1,127 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+    Events
+{% endblock %}
+
+{% block content %}
+
+    <div class="row justify-content-md-start justify-content-center my-3">
+        <div class="col-12 col-md-2">
+            <a class="btn btn-success" href="{{ path('default_event') }}">Retour à la liste des events</a>
+        </div>
+    </div>
+
+    {% if event is not empty %}
+
+        <div class="row hautpagebarsolo mt-3">
+            <div class="col-12">
+                <h3 class="TitreBarName">{{ event.titre }}</h3>
+            </div>
+        </div>
+
+
+        <!-- PARTIE INFO EVENT -->
+        <section class="row justify-content-center my-5">
+
+            <!-- PARTIE GAUCHE IMAGE -->
+
+            <div class="col-md-7 card-jeu">
+                <div class="cardimage align-items-center">
+                    <a href="{{ path('default_jeu', {'id': event.jeu.id}) }}">
+                        <img class="imagedujeux" src="{{ asset('assets/img/' ~ event.jeu.image ) }}"
+                             alt="{{ event.jeu.nom }}">
+                    </a>
+                </div>
+            </div>
+
+
+            <!-- PARTIE DROITE TEXTE -->
+
+            <div class="col-md-4 text-center descriSoloBar">
+                <p class="titresolobar"><em>Informations sur la partie</em></p>
+                <div class="ligne-orange mb-3"></div>
+                <br>
+                <p class="titresolobar"> Jeu :</p> <a
+                        href="{{ path('default_jeu', {'id': event.jeu.id}) }}">{{ event.jeu.nom }}</a><br>
+                <p class="titresolobar"> joueurs min/max : </p> {{ event.joueursMin ~ ' - ' ~ event.joueursMax }}<br>
+                <p class="titresolobar mt-3">Date de la partie :</p> {{ event.heureDebut | date('D j M Y') }}<br>
+                <p class="titresolobar mt-3">Horaires :</p> {{ event.heureDebut | date('H:i') }}
+                - {{ event.heureFin | date('H:i') }}<br>
+                <p class="titresolobar mt-3">Informations complémentaires :</p> {{ event.autreInfos | raw }}<br>
+                <p class="titresolobar mt-3">Joueurs inscrits :</p>
+                {% for joueur in event.joueurs %}
+                    {{ joueur.pseudo }} <br>
+                {% endfor %}
+                <br> <br>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                    <a class="btn btn-success" href="{{ path('addjoueur', {'id' : event.id }) }}">Je participe</a>
+
+                {% else %}
+
+                    <a class="btn btn-success" href="{{ path('membre_connexion') }}">Je participe</a>
+
+                {% endif %}
+            </div>
+
+        </section>
+
+
+
+        <!-- PARTIE INFO BAR -->
+        <section class="row justify-content-center my-5">
+
+            <!-- PARTIE GAUCHE TEXTE -->
+            <div class="col-md-4 text-center descriSoloBar">
+                <p class="titresolobar"><em>Informations sur le bar</em></p>
+                <div class="ligne-orange mb-3"></div>
+                <br>
+                <p class="titresolobar"> adresse du bar
+                    : </p> {{ event.bar.adresse }} </br> {{ event.bar.codePostal ~ ' ' ~ event.bar.ville }} </br>
+                <p class="titresolobar mt-3">Informations complémentaires :</p> {{ event.bar.autresInfos }}<br>
+            </div>
+
+
+            <!-- PARTIE DROITE IMAGE -->
+
+            <div class="col-md-7 card-jeu">
+                <div class="cardimage align-items-center">
+                    <a href="{{ path('default_bar', {'id': event.bar.id}) }}">
+                        <img class="imagedujeux" src="{{ asset('assets/img/' ~ event.bar.image ) }}"
+                             alt="{{ event.bar.image }}">
+                    </a>
+                </div>
+            </div>
+
+        </section>
+
+
+
+    {% else %}
+
+        <div class="row alert alert-danger text-center">aucun Event à afficher</div>
+
+    {% endif %}
+
+
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="row justify-content-md-end justify-content-center my-3">
+            <div class="col-12 col-md-2">
+                <a class="btn btn-danger" href="{{ path('delete_event', {'id' : event.id }) }}"
+                   onclick="return confirm('Vous êtes sur le point de supprimer l\'event n°{{ event.id }} du bar \'{{ event.bar.nom }}\' ! CONTINUER ?')">supprimer
+                    l'event</a>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="row justify-content-md-end justify-content-center my-3">
+        <div class="col-12 col-md-2">
+            <a class="btn btn-success" href="{{ path('default_event') }}">Retour à la liste des events</a>
+        </div>
+    </div>
+
+
+
+{% endblock %}

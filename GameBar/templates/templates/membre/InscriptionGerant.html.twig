@@ -1,0 +1,19 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+    Inscription Gérant
+{% endblock %}
+
+{% block content %}
+    <div class="row ">
+        <div class="col-md-3 col-offset-6 centered  my-5 designform inscriptionformGerant">
+            {% for message in app.flashes('notice') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <h3>Inscription Gérant</h3>
+            {{ form( form, { attr: { novalidate: 'novalidate' } } ) }}
+        </div>
+    </div>
+{% endblock %}

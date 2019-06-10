@@ -1,0 +1,156 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+    Bars
+{% endblock %}
+
+{% block content %}
+
+    {# affichage du calendrier #}
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar-bar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                plugins: ['interaction', 'dayGrid', 'timeGrid', 'list'],
+                defaultView: 'listMonth',
+                defaultDate: '2019-05-10',
+
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+                },
+
+                events: {{ calendar | raw }}
+            });
+
+            calendar.render();
+        });
+    </script>
+
+    <div class="row justify-content-md-start justify-content-center my-3">
+        <div class="col-md-2 col-8">
+            <a class="btn btn-success" href="{{ path('default_bar') }}">Retour à la liste des bars</a>
+        </div>
+    </div>
+
+    {% if bar is not empty %}
+
+        <!-- HAUT DE LA PAGE-->
+        <div class="row hautpagebarsolo">
+            <div class="col-12">
+                <h3 class="TitreBarName">{{ bar.nom }}</h3>
+            </div>
+        </div>
+
+        <!-- IMAGE -->
+        <div class="row justify-content-center mt-12 mb-12">
+            <div class="col-md-4">
+                <img class="imagedubars2" src="{{ asset('assets/img/' ~ bar.image ) }}"
+                     alt="{{ bar.image }}">
+            </div>
+        </div>
+
+
+
+        <section class="row my-5"> {# 1ère section #}
+
+            <!-- PARTIE GAUCHE CALENDRIER -->
+
+            <div class="col-12 col-md-6 m-3" id="calendar-bar"></div>
+
+
+            <!-- PARTIE DROITE TEXTE -->
+
+            <div class="col-md-4  text-center descriSoloBar">
+                <p class="titresolobar"><em>Informations du bar</em></p>
+                <div class="ligne-orange mb-3"></div>
+                <br>
+                <p class="titresolobar"> Adresse du
+                    bar </p> {{ bar.adresse }} </br> {{ bar.codePostal ~ ' ' ~ bar.ville }} </br>
+                <br>
+                <p class="titresolobar">Places max dispo </p> {{ bar.placesMax }} places </br>
+                <br>
+                <p class="titresolobar"> Autres infos </p>{{ bar.autresInfos | raw }} </br>
+                <br>
+            </div>
+
+            <!-- BAS DE PAGE -->
+        </section> {# /1ère section #}
+
+
+        <section class="row justify-content-center"> {# 3e section #}
+
+            <div class="col-md-12 text-center lebas">
+
+                    <!-- ------------JEUX DU BAR------------- -->
+                    <p class="titresolobar">-- JEUX DU BAR --</p>
+                    <hr>
+                    {% if bar.jeux is not empty %}
+                    {% for jeu in bar.jeux %}
+                        <strong><a href="{{ path('default_jeu', {'id': jeu.id }) }}">{{ jeu.nom }}</a></strong> </br>
+                {% endfor %}
+                {% else %}
+                    <div class="alert alert-danger text-center">Désolé il n'y a aucun jeu associé à ce bar
+                    </div>
+                {% endif %}
+            </div>
+
+
+            <!-- Div map -->
+
+                <div class="col-10 col-md-6 my-5" id="map"></div>
+
+            <script>
+                // Initialisation de la map
+                function initMap() {
+                    // Localisation du bar
+                    var barLocation = {lat: {{ bar.lat }}, lng: {{ bar.lng }} };
+
+                    // La map se centre.
+                    var map = new google.maps.Map(
+                        document.getElementById('map'), {zoom: 16, center: barLocation});
+                    // Le marker de la position
+                    var marker = new google.maps.Marker({position: barLocation, map: map});
+                }
+            </script>
+
+            <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiC5kDpbi61HXGMzwuTYkDbpUiEJQb5f4&callback=initMap">
+            </script>
+
+        </section> {# /3e section #}
+
+
+
+
+    {% else %}
+
+        <div class="alert alert-danger text-center">Désolé il n'y a aucun bar à afficher</div>
+
+    {% endif %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="row justify-content-end my-3">
+            <div class="col-3 my-5 text-center">
+                <a class="btn btn-danger" href="{{ path('delete_bar', {'id' : bar.id }) }}"
+                   onclick="return confirm('Vous êtes sur le point de supprimer le bar \'{{ bar.nom }}\' ! CONTINUER ?')">supprimer
+                    le bar</a>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="row justify-content-end my-3">
+        <div class="col-md-2 col-10">
+            <a class="btn btn-success" href="{{ path('default_bar') }}">Retour à la liste des bars</a>
+        </div>
+    </div>
+
+    </div>
+    </div>
+
+
+
+{% endblock %}

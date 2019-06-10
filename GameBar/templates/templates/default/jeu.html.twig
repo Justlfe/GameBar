@@ -1,0 +1,101 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+    Jeux
+{% endblock %}
+
+{% block content %}
+
+    <div class="row justify-content-md-start justify-content-center my-3">
+        <div class="col-8 col-md-2">
+            <a class="btn btn-success" href="{{ path('default_jeu') }}">Retour à la liste des jeux</a>
+        </div>
+    </div>
+
+
+
+    {% if jeu is not empty %}
+
+        <div class="row hautpagebarsolo mt-3">
+            <div class="col-12">
+                <h3 class="TitreBarName">{{ jeu.nom }}</h3>
+            </div>
+        </div>
+
+        <section class="row my-5">
+
+            <!-- PARTIE GAUCHE IMAGE -->
+
+            <div class="col-md-6 m-3 card-jeu">
+                <div class="cardimage align-items-center">
+                    <img class="imagedujeux" src="{{ asset('assets/img/' ~ jeu.image ) }}"
+                         alt="{{ jeu.image }}">
+                </div>
+            </div>
+
+
+            <!-- PARTIE DROITE TEXTE -->
+
+            <div class="col-md-4  text-center descriSoloBar">
+                <p class="titresolobar"><em>Informations sur le jeu</em></p>
+                <div class="ligne-orange mb-3"></div>
+                <br>
+                <p class="titresolobar"> joueurs min/max </p> {{ jeu.joueursMin ~ ' - ' ~ jeu.joueursMax }}<br>
+                <p class="titresolobar mt-3"> difficulté </p> {{ jeu.difficulty }}<br>
+                <p class="titresolobar mt-3">temps de jeu moyen </p> {{ jeu.tempsMoyen }}<br>
+                <p class="titresolobar mt-3"> description </p> {{ jeu.description | raw }}<br>
+                <p class="titresolobar mt-3">règles du jeu </p> <a
+                        href="{{ asset('assets/regles/' ~ jeu.regles  ) }}">{{ jeu.regles }}</a><br>
+            </div>
+
+        </section>
+
+        <hr>
+        <!-- BAR POSSEDANT LE JEU -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-12 col-md-8 text-center descriSoloBar">
+                <p class="titresolobar">Liste des bars possédant "{{ jeu.nom }}"</p> <br>
+                {% if jeu.bar is not empty %}
+
+                {% for bar in jeu.bar %}
+                    <strong><a href="{{ path('default_bar', {'id': bar.id}) }}">{{ bar.nom }}</a></strong> </br>
+                {% endfor %}
+
+                {% else %}
+                <div class="alert alert-danger text-center">aucun bar ne possède ce jeu
+                    pour l'instant
+                </div>
+            </div>
+
+            {% endif %}
+
+        </div>
+        </div>
+    {% else %}
+
+        <div class="row alert alert-danger text-center">aucun jeu à afficher</div>
+
+    {% endif %}
+
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="row justify-content-end my-3">
+            <div class="col-2">
+                <a class="btn btn-danger" href="{{ path('delete_jeu', {'id' : jeu.id }) }}"
+                   onclick="return confirm('Vous êtes sur le point de supprimer le jeu \'{{ jeu.nom }}\' ! CONTINUER ?')">supprimer
+                    le jeu</a>
+            </div>
+        </div>
+
+    {% endif %}
+
+    <div class="row justify-content-md-end justify-content-center my-3">
+        <div class="col-8 col-md-2">
+            <a class="btn btn-success" href="{{ path('default_jeu') }}">Retour à la liste des jeux</a>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
