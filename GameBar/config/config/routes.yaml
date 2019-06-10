@@ -1,0 +1,9 @@
+index:
+    path: /
+    controller: App\Controller\DefaultController::index
+
+love_u_json:
+    path: /json
+    defaults: { _controller: App\Controller\DefaultController::getDataJSON }
+    methods: [GET]
+
